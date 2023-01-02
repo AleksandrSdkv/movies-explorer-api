@@ -1,0 +1,33 @@
+{
+    "name": "movies-explorer-api",
+    "version": "1.0.0",
+    "description": "backend movies",
+    "type": "module",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js",
+        "dev": "nodemon app.js",
+        "lint": "eslint ."
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/AleksandrSdkv/movies-explorer-api.git"
+    },
+    "author": "Aleksandr",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/AleksandrSdkv/movies-explorer-api/issues"
+    },
+    "homepage": "https://github.com/AleksandrSdkv/movies-explorer-api#readme",
+    "dependencies": {
+        "@eslint/eslintrc": "^1.4.1",
+        "body-parser": "^1.20.1",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "mongoose": "^6.8.2"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.20"
+    },
+    "keywords": []
+}
