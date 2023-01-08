@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
+import { regexpUrl } from '../utils/constants.js';
 
 const { Schema } = mongoose;
-
-const regexpUrl = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/i;
 
 const Movie = new mongoose.Schema({
   country: {

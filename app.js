@@ -1,23 +1,13 @@
-import path from 'path';
 import express from 'express';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { errors } from 'celebrate';
-import rateLimit from 'express-rate-limit';
-import helmet from 'helmet';
+import { router } from './routes/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
-import { userRouter } from './routes/users.js';
-import { movieRouter } from './routes/movies.js';
-import { createUser, login } from './controllers/users.js';
-import { auth } from './middlewares/auth.js';
-import { NotFoundError } from './errors/NotFoundError.js';
-import { userBodyValid, loginValid } from './validators/authValidators.js';
+import { limiter } from './utils/rateLimiter.js';
+import { config } from './utils/constants.js';
 import { requestLogger, errorLogger } from './middlewares/logger.js';
-
-dotenv.config();
-const config = dotenv.config({ path: path.resolve(process.env.NODE_ENV === 'production' ? '.env' : '.env.common') }).parsed;
 
 const app = express();
 
@@ -41,24 +31,12 @@ app.get('/crash-test', () => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
-const limiter = rateLimit({
-  max: 100,
-});
 app.use(limiter);
-
-app.post('/signup', userBodyValid, createUser);
-app.post('/signin', loginValid, login);
-
-app.use(auth);
-app.use(helmet());
-app.use('/', userRouter);
-app.use('/', movieRouter);
-
-app.all('/*', (req, res, next) => {
-  next(new NotFoundError('Страница не существует'));
-});
-
+// Подключаем все роутинги
+app.use(router);
+// Логирование ошибок
 app.use(errorLogger);
+// Централизованный обработчик ошибок
 app.use(errors());
 app.use(errorHandler);
 

@@ -1,8 +1,7 @@
 # movies-explorer-api
 ## Ссылка и IP
-__
-
+____
 ### Backend - https://movies-project.nomoredomains.club
-__
+____
 ### Репозиторий проекта - https://github.com/AleksandrSdkv/movies-explorer-api.git
 ### IP 84.201.154.197

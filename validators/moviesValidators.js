@@ -1,6 +1,5 @@
 import { Joi, celebrate } from 'celebrate';
-
-const urlLink = /^https?:\/\/(www\.)?[a-zA-Z\0-9]+\.[\w\-._~:/?#[\]@!$&'()*+,;=]{2,}#?$/;
+import { regexpUrl } from '../utils/constants.js';
 
 export const moviesValid = celebrate({
   body: Joi.object().keys({
@@ -10,15 +9,15 @@ export const moviesValid = celebrate({
     year: Joi.string().min(4).max(4).required(),
     description: Joi.string().min(2).required(),
     image: Joi.string()
-      .pattern(urlLink)
+      .pattern(regexpUrl)
       .uri({ scheme: ['http', 'https'] })
       .required(),
     trailerLink: Joi.string()
-      .pattern(urlLink)
+      .pattern(regexpUrl)
       .uri({ scheme: ['http', 'https'] })
       .required(),
     thumbnail: Joi.string()
-      .pattern(urlLink)
+      .pattern(regexpUrl)
       .uri({ scheme: ['http', 'https'] })
       .required(),
     movieId: Joi.number().min(1).required(),
