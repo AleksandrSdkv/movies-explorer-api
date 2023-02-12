@@ -17,7 +17,7 @@ const Movie = new mongoose.Schema({
     required: true,
   },
   year: {
-    type: Number,
+    type: String,
     required: true,
   },
   description: {
@@ -41,8 +41,9 @@ const Movie = new mongoose.Schema({
     },
   },
   thumbnail: {
-    type: Number,
+    type: String,
     required: true,
+
   },
   owner: {
     type: Schema.Types.ObjectId,
@@ -50,7 +51,7 @@ const Movie = new mongoose.Schema({
     required: true,
   },
   movieId: {
-    type: Schema.Types.ObjectId,
+    type: Number,
     required: true,
   },
   nameRU: {

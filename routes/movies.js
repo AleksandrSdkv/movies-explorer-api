@@ -10,4 +10,4 @@ export const movieRouter = Router();
 
 movieRouter.get('/movies', getMovies);
 movieRouter.post('/movies', moviesValid, createMovies);
-movieRouter.delete('/movies/_id', validMoviesId, deleteMovies);
+movieRouter.delete('/movies/:_id', validMoviesId, deleteMovies);

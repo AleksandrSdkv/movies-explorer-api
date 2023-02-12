@@ -13,11 +13,11 @@ export const getMovies = (req, res, next) => {
 };
 
 export const createMovies = (req, res, next) => {
-  req.body.owner = req.user._id;
-  movieModel.create(req.body)
-    .then((movie) => res.send(movie))
+  movieModel.create({ ...req.body, owner: req.user._id })
+    .then((newMovie) => res.send(newMovie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
+        console.log(err);
         next(new BadRequestError('Введены некорректные данные'));
       } else {
         next(new InternalServerError('Произошла ошибка сервера'));
@@ -26,22 +26,24 @@ export const createMovies = (req, res, next) => {
 };
 
 export const deleteMovies = (req, res, next) => {
-  movieModel.findById(req.params.movieId)
+  movieModel.findById(req.params._id)
     .then((movie) => {
       if (!movie) {
-        next(new NotFoundError('Фильм не найден'));
+        throw new NotFoundError('Карточка не найдена');
       } else if (movie.owner.toString() !== req.user._id) {
-        next(new ForbiddenError('Доступ запрещен'));
+        throw new ForbiddenError('Доступ запрещен');
       } else {
-        movie.remove();
-        res.send(movie);
+        return movie.remove();
       }
+    })
+    .then((movie) => {
+      res.send(movie);
     })
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
         next(new BadRequestError('Введены некорректные данные'));
       } else {
-        next(new InternalServerError('Произошла ошибка удаление фильма с сервера'));
+        next(new InternalServerError('Произошла ошибка удаление карточки с сервера'));
       }
     });
 };

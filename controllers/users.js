@@ -33,6 +33,7 @@ export const createUser = (req, res, next) => {
 
 export const updateUser = (req, res, next) => {
   const { email, name } = req.body;
+
   userModel.findByIdAndUpdate(req.user._id, { email, name }, {
     new: true,
     runValidators: true,
