@@ -5,10 +5,10 @@ import { ForbiddenError } from '../errors/ForbiddenError.js';
 import { NotFoundError } from '../errors/NotFoundError.js';
 
 export const getMovies = (req, res, next) => {
-  movieModel.find({})
+  movieModel.find({ owner: req.user._id })
     .then((movies) => res.send({ data: movies }))
     .catch(() => {
-      next(new InternalServerError('Произошла ошибка выгрузки фильмов с сервера'));
+      next(new InternalServerError('Произошла ошибка выгрузки карточек с сервера'));
     });
 };
 
